@@ -77,7 +77,7 @@ contract Test1_231222 {
 
 // * 학생 조회 기능(1) - 특정 학생의 번호를 입력하면 그 학생 전체 정보를 반환
     function getStudent1(uint _number) public view returns(Student memory) {
-        return studentsNumber[_number];
+        return studentsNumber[_number - 1];
     }
 
 // * 학생 조회 기능(2) - 특정 학생의 이름을 입력하면 그 학생 전체 정보를 반환
@@ -132,35 +132,48 @@ contract Test1_231222 {
         }
     }
 
-// // * 보충반 조회 기능 - F 학점을 받은 학생들의 숫자와 그 전체 정보를 반환
-//     function getSupplementary() public view returns(uint, Student[] memory) {
-//         uint numF;
-//         Student[] memory stF = new Student[](getAllNum());
+// * 보충반 조회 기능 - F 학점을 받은 학생들의 숫자와 그 전체 정보를 반환
+    function getFclass() public view returns(uint, Student[] memory) {
+        // F 학점 학생 수 구하기
+        uint numF;
 
-//         for(uint i = 0; i < getAllNum(); i++) {
-//             if(keccak256(bytes(students[i].grade)) == keccak256(bytes("F"))) {
-//                 stF.push(students[i]);
-//                 numF++;
-//             }
-//         }
+        for(uint i = 0; i < getAllNum(); i++) {
+            if(keccak256(bytes(students[i].grade)) == keccak256(bytes("F"))) {
+                numF++;
+            }
+        }
 
-//         return (numF, stF);
-//     }
+        // 그 학생 수 만큼 array에 길이 부여
+        Student[] memory F_class = new Student[](numF);
+        uint idx;
+        // 그 학생들 array에 넣기
+        for(uint i = 0; i < getAllNum(); i++) {
+            if(students[i].score < 60) {
+                F_class[idx] = students[i];
+                idx++;
+            }
+        }
+        return (numF, F_class);
+    }
 
 // -------------------------------------------------------------------------------
-// // * S반 조회 기능 - 가장 점수가 높은 학생 4명을 S반으로 설정하는데, 이 학생들의 전체 정보를 반환하는 기능 (S반은 4명으로 한정)
-//     function getSclass() public view returns(Student[4] memory) {
-//         Student[4] memory stS;
-//         require(stS.length < 4, "S class is full");
+// * S반 조회 기능 - 가장 점수가 높은 학생 4명을 S반으로 설정하는데, 이 학생들의 전체 정보를 반환하는 기능 (S반은 4명으로 한정)
+    function getSclass() public view returns(Student[] memory) {
+        Student[] memory _students = students;
 
-//         for(uint i = 0; i < getAllNum(); i++) {
-//             uint topscore;
-            
-//             if(students[i].score > topscore) {
-//                 stS.push();
-//             }
-//         }
+        for(uint i = 0; i < getAllNum(); i++) {
+            for(uint j = i + 1; j < getAllNum(); j++) {
+                if(_students[i].score < _students[j].score) {
+                    (_students[i], _students[j]) = (_students[j], _students[i]);
+                }
+            }
+        }
 
-//         return stS;
-//     }
+        Student[] memory S_class = new Student[](4); // Student[4] memory S_class; -> 이 형태면 위에 returns(Student[4] memory)처럼 배열 길이 넣어줘야 함
+        for(uint i = 0; i < 4; i++) {
+            S_class[i] = _students[i];
+        }
+
+        return S_class;
+    }
 }

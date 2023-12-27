@@ -4,9 +4,10 @@ pragma solidity >=0.8.2 <0.9.0;
 /*
 Array : 배열
 + 같은 자료형들의 모임
-+ 전체 값 반환(= return) 가능
++ 전체 값 반환(= return) 가능 ex) arr.length()로 전체 값 반환 가능
 + 순서(= index) 있을 때 유리
 - key, value 기능 못함
+- gas비가 비쌈 (mapping보다)
 
 1. 값 넣기
 2. 값 빼기
