@@ -54,6 +54,7 @@ contract CONSTRUCTOR3 {
     }
 }
 
+// 비밀번호 맞춘 사람만 배포 가능한 기능
 contract CONSTRUCTOR4 {
     bytes32 pw;
 
@@ -70,9 +71,10 @@ contract CONSTRUCTOR4 {
     }
 }
 
+// 생성자에 if도 들어갈 수 있음
 contract CONSTRUCTOR5 {
     bool higherThanTen;
-    
+
     constructor(uint _a) {
         if(_a > 10) {
             higherThanTen = true;
