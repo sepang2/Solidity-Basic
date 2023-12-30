@@ -70,23 +70,27 @@ contract Test1_231222 {
 // * 학생 추가 기능 - 특정 학생의 정보를 추가
     function setStudent(string memory _name, uint _score, string[] memory _classes) public {
         // 번호는 1번부터 시작하여 정보를 기입하는 순으로 순차적으로 증가합니다.
+        // array 사용 시
         students.push(Student(_name, students.length + 1, _score, setGrade(_score), _classes));
+        // mapping 사용 시
         studentsNumber[students.length + 1] = Student(_name, students.length + 1, _score, setGrade(_score), _classes);
         studentsName[_name] = Student(_name, students.length + 1, _score, setGrade(_score), _classes);
     }
 
 // * 학생 조회 기능(1) - 특정 학생의 번호를 입력하면 그 학생 전체 정보를 반환
+// mapping 만으로 구현
     function getStudent1(uint _number) public view returns(Student memory) {
         return studentsNumber[_number - 1];
     }
 
 // * 학생 조회 기능(2) - 특정 학생의 이름을 입력하면 그 학생 전체 정보를 반환
+// mapping 만으로 구현
     function getStudent2(string memory _name) public view returns(Student memory) {
         return studentsName[_name];
     }
 
     /*
-    // mapping 안쓰고 array 만으로 구현하는 경우
+    // array 만으로 구현하는 경우
     function search(string memory _name) public view returns(Student memory) {
        for(uint i = 0; i < students.length; i++) {
             if(keccak256(bytes(_name)) == keccak256(bytes(students[i].name))) {
