@@ -6,6 +6,7 @@ pragma solidity >=0.8.2 <0.9.0;
 enum
 + 용량이 적음(uint8 로 출력)
 + 가독성 좋음
++ 상태 나타낼 때 자주 사용
 */
 contract ENUM {
     enum Status {
