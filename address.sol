@@ -94,6 +94,8 @@ contract MSG {
 contract ADDRESS_CONSTRUCTOR2 {
     address payable owner;
 
+    // constructor(생성자)는 배포와 동시에 실행.
+    // 즉 msg(=constructor).sender(=contract 배포자)
     constructor() {
         owner = payable(msg.sender);
     }
