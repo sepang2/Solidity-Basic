@@ -98,13 +98,13 @@ contract Test4_231228 {
     }
 
     // 지불은 smart contract에게 함.
-    // * 지불을 미리 하고 주유시 차감하는 기능
+    // * 지불을 미리 하고(아래 deposit()에 구현), 주유시 차감하는 기능(위 fillFuel()에 구현)
     function deposit() public payable {
         require(msg.value == 1 ether, "Not enough money");
         paid += msg.value;
     }
     
-    //   주유소 사장님이 withdraw하는 기능
+    // 주유소 사장님이 withdraw하는 기능
     function withdraw() public {
         CEO.transfer(address(this).balance);
     }
