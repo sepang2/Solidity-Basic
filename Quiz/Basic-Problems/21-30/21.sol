@@ -6,7 +6,7 @@ contract Q21 {
     uint[] arr;
 
     function setArr(uint _n) public {
-        require(_n % 3 == 0);
+        require(_n % 3 == 0, "You can push only multiples of 3");
         arr.push(_n);
     }
 }

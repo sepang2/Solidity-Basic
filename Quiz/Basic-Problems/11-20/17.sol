@@ -9,4 +9,9 @@ contract Q17 {
         if(keccak256(bytes(_name)) == keccak256(bytes("Bob"))) return true;
         else return false;
     }
+
+    // boolean값 return 방법
+    function stringCompare2(string memory _name) public pure returns(bool) {
+        return keccak256(bytes(_name)) == keccak256(bytes("Bob"));
+    }
 }

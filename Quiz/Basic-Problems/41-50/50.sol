@@ -30,3 +30,24 @@ contract Q50_2 {
         return _num;
     }
 }
+
+// input이 2자리 이상 숫자인 경우
+contract Q50_2_2 {
+    function getDigits(uint _n) public pure returns(uint) {
+        uint digit = 1;
+
+        while(_n / 10 != 0) {
+            _n /= 10;
+            digit++;
+        }
+
+        return digit;
+    }
+
+    function getNum(uint _x, uint _y, uint _z) public pure returns(uint) {
+        uint c_dig = getDigits(_z);
+        uint b_dig = getDigits(_y);
+
+        return _x*10**(b_dig + c_dig)  + _y*10**(c_dig) + _z;
+    }
+}

@@ -22,3 +22,17 @@ contract Q42 {
         return customers;
     }
 }
+
+/*
+string은 특별한 형태의 byte임을 생각.
+따라서 string length를 알고 싶다면, bytes로 변환 후 bytes(string).length 사용해서 알 수 있음.
+*/
+contract stringLength {
+    function getLength(string memory _s) public pure returns(uint) {
+        return bytes(_s).length;
+    }
+
+    function getBytes(string memory _s) public pure returns(bytes memory) {
+        return bytes(_s);
+    }
+}
