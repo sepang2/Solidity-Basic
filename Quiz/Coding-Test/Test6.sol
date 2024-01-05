@@ -68,6 +68,8 @@ contract Test6_240104 {
         tmp = bytesSplit(bytes(_s));
 
         for(uint i = 0; i < strs.length; i++) {
+            // string은 동적, bytes1은 정적 => abi.encodePacked()는 bytes형을 반환,
+            // => abi.encodePacked(bytes1)으로 동적으로 만들고 여기에 string 씌우기
             strs[i] = string(abi.encodePacked(tmp[i]));
         }
 
