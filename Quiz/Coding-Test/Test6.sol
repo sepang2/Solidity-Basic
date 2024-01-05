@@ -10,6 +10,7 @@ pragma solidity >=0.8.2 <0.9.0;
 */
 
 contract Test6_240104 {
+    // 숫자를 넣었을 때 그 숫자의 자릿수와 각 자릿수의 숫자를 나열한 결과를 반환하세요.
     function getDigit(uint _n) internal pure returns(uint) {
         uint digit = 1;
 
@@ -32,13 +33,45 @@ contract Test6_240104 {
         
         return nums;
     }
+
+    // 발상의 전환 -> 10으로 나눠서 배열 끝부터 값 넣기
+    function getNum2(uint _n) internal pure returns(uint[] memory) {
+        uint[] memory nums = new uint[](getDigit(_n));
+        uint i = nums.length;
+
+        while(_n != 0) {
+            nums[--i] = _n % 10;
+            _n /= 10;
+        }
+        
+        return nums;
+    }
     
     function getNumbers(uint _n) public pure returns(uint, uint[] memory) {
-        return (getDigit(_n), getNum(_n));
+        return (getDigit(_n), getNum2(_n));
+    }
+
+    // 문자열을 넣었을 때 그 문자열의 자릿수와 문자열을 한 글자씩 분리한 결과를 반환하세요.
+    function bytesSplit(bytes memory _bytes) internal pure returns(bytes1[] memory) {
+        bytes1[] memory _bytes1 = new bytes1[](_bytes.length);
+        
+        for(uint i = 0; i < _bytes.length; i++) {
+            _bytes1[i] = _bytes[i];
+        }
+
+        return _bytes1;
     }
 
     function getStr(string memory _s) internal pure returns(string[] memory) {
-        
+        string[] memory strs = new string[](bytes(_s).length);
+        bytes1[] memory tmp = new bytes1[](bytes(_s).length);
+        tmp = bytesSplit(bytes(_s));
+
+        for(uint i = 0; i < strs.length; i++) {
+            strs[i] = string(abi.encodePacked(tmp[i]));
+        }
+
+        return strs;
     }
 
     function getStrings(string memory _s) public pure returns(uint, string[] memory) {
