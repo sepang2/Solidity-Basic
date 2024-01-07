@@ -14,7 +14,7 @@ import '../Import2/e.sol';
 /*
 전체 구성
 
-Import
+Import1
 |___a.sol
 |___b.sol
 |___c.sol
