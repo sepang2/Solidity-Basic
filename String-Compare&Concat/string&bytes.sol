@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.2 <0.9.0;
 
+// string은 특별한 형태의 bytes
 // string <-> bytes 형변환
 contract STRING_BYTES {
     function stringToBytes(string memory _s) public pure returns(bytes memory) {

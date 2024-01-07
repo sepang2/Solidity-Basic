@@ -14,7 +14,7 @@ contract Basic5 {
     }
 
     function setC(string memory _a) public {
-        a = bytes(_a);  // string 형의 _a가 bytes형의 a로 저장됨
+        a = bytes(_a);  // string 형의 _a가 bytes형의 a로 저장됨 -> ascii code로 반환
     }
 
     function setD() public {

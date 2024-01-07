@@ -12,7 +12,7 @@ contract CONCAT {
         return string(abi.encodePacked(_a, _b));
     }
 
-    function concat3(string memory _name, uint _age) public pure returns(string memory) {
+    function concat3(string memory _name, string memory _age) public pure returns(string memory) {
         return string(abi.encodePacked("name : ", _name, "age : ", _age));
     }
 }
