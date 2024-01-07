@@ -21,7 +21,7 @@ contract Q30 {
         for(uint i = 0; i < _arr.length; i++) {
             for(uint j = i + 1; j < _arr.length; j++) {
                 if(_arr[i] < _arr[j]) {
-                    (_arr[i], _arr[j]) = (_arr[j], _arr[i]);
+                    (_arr[i], _arr[j]) = (_arr[j], _arr[i]); // swap
                 }
             }
         }
