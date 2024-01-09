@@ -4,18 +4,21 @@ pragma solidity >=0.8.2 <0.9.0;
 contract ADDs {
     // i++
     uint i1;
+
     function add1() public {
         i1++;
     }
 
     // i+=1
     uint i2;
+
     function add2() public {
-        i2+=1;
+        i2 += 1;
     }
 
     // i=i+1
     uint i3;
+
     function add3() public {
         i3 = i3 + 1;
     }
@@ -30,8 +33,10 @@ contract ADDs {
 */
 
 contract RETURN_UNIT_OR_STRING {
-    function returnUintOrString(bool isString) public pure returns(bytes memory) {
-        if(isString) {
+    function returnUintOrString(
+        bool isString
+    ) public pure returns (bytes memory) {
+        if (isString) {
             return abi.encodePacked("String");
         } else {
             uint number = 12345;
