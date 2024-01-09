@@ -69,6 +69,37 @@ contract C {
     }
 }
 
+contract D {
+    struct ABC {
+        uint a;
+        string b;
+        bool c;
+    }
+
+    ABC public d = ABC(1, "xyz", true);
+
+    bytes1 public x = 0x12;
+    uint internal y = 2;
+    string private z = "abcde";
+    bytes public w;
+
+    function setA(bytes1 _x) public {
+        x = _x;
+    }
+
+    function setB(uint _y) public {
+        y = _y;
+    }
+
+    function setC(string memory _z) public {
+        z = _z;
+    }
+
+    function setW(bytes memory _w) public {
+        w = _w;
+    }
+}
+
 contract E {
     uint256 public a = 10;
     uint256 internal b = 20;
