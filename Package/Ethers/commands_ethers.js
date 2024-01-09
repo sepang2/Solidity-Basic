@@ -34,6 +34,7 @@ var txReceipt = signer.sendTransaction(tx).then(console.log); // 아래 주석 �
 await provider_goerli2.getCode("_contract address"); // Bytecode 반환
 await provider_goerli2.getCode("_account address"); // '0x' 나오는게 정상. bytecode는 CA에만 있기 때문
 await provider_goerli2.getStorage("_contract address", 1); // contract의 slot[1]에 저장된 값 16진수 형태로 반환
+/* getStorage()로 visibility 상관 없이 모든 값을 볼 수 있기 때문에 절대! 중요한 정보 저장 X */
 
 var abi = "_ABI";
 var c_address = "_contract address";

@@ -80,6 +80,8 @@ await web3.eth.getCode("_contract address");
 await web3.eth.getStorageAt("_contract address", 0); // 슬롯의 0번째에 있는 변수 값 16진수로 반환
 await web3.eth.getStorageAt("_contract address", 1);
 await web3.eth.getStorageAt("_contract address", 2);
+/* 블록체인은 투명함. 즉 getStorageAt()으로 public이든 private든 값을 모두 볼 수 있음.
+따라서 중요한 정보는 절대!절대!절대! 값을 저장하면 안됨 */
 
 // -------------------------------------------------------------------------------------------------
 
