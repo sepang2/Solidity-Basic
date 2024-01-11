@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.2 <0.9.0;
 
+// array와 mapping의 gas비교
 contract ARRAY_MAPPING {
     struct A {
         string name;
@@ -8,6 +9,7 @@ contract ARRAY_MAPPING {
     }
 
     A[] a_array;
+
     mapping(uint => A) a_mapping;
     uint idx; // v2
     uint idx_2 = 0; // v3
@@ -30,18 +32,21 @@ contract ARRAY_MAPPING {
 /*
 v2 - mapping에서 전체 값 반환하기 위해 상태변수 idx 선언한 경우. 상태변수 가격이 비싼걸 알 수 있음.
 상태변수 값 받을 준비하느라 첫 실행 가스비가 많이 비쌈.
-*/
 // array gas : (91709, 69665) / (74609, 52565) / (74609, 52565)
 // mapping gas : (92151, 69967) / (75051, 52867) / (75051, 52867)
+*/
 
-/*v3 - 상태변수 0으로 초기화해서 값 받을 준비 안시키면 가스비가 줄까? => 아님 똑같음 */
+/*
+v3 - 상태변수 0으로 초기화해서 값 받을 준비 안시키면 가스비가 줄까? => 아님 똑같음
 // mapping gas : (92151, 69967) / (75051, 52867) / (75051, 52867)
+*/
 
 /*
 평소 : arr > mapping
 배포 : arr < mapping + idx
       arr < mapping
 */
+
 // deployment gas : 374991, 298353
 contract ARRAY_MAPPING2 {
     struct A {

@@ -32,7 +32,7 @@ contract ADDs {
 3 : 43528, 22464 / 26428, 5364
 */
 
-contract RETURN_UNIT_OR_STRING {
+contract RETURN_UINT_OR_STRING {
     function returnUintOrString(
         bool isString
     ) public pure returns (bytes memory) {
