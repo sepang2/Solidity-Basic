@@ -142,7 +142,7 @@ WS(Web Socket) : 실시간 정보 얻고 싶을 때 사용
 */
 
 var { Web3 } = require("web3");
-var web3 = new Web3("wss://mainnet.infura.io/ws/v3/apikey"); // https -> wss 로 바뀌고, 중간에 /ws/ 추가됨
+var web3 = new Web3("wss://mainnet.infura.io/ws/v3/_API Key"); // https -> wss 로 바뀌고, 중간에 /ws/ 추가됨
 
 // 새로 생성되는 블록 정보 실시간으로 받아오는 명령어
 var subscription = await web3.eth.subscribe("newHeads");

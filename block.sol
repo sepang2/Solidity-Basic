@@ -54,3 +54,10 @@ contract BLCOK2 {
         return blockhash(getBlockNumber() - 1);
     }
 }
+
+// 체인 아이디 반환
+contract CHAINID {
+    function getChainID() public view returns (uint) {
+        return block.chainid;
+    }
+}
