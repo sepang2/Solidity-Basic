@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v5.0.0) (token/ERC20/ERC20.sol)
 
+/*
+https://www.npmjs.com/package/@openzeppelin/contracts?activeTab=code
+npm @openzeppelin/contracts의 ERC20.sol 뜯어보기
+*/
 pragma solidity ^0.8.20;
 
 import {IERC20} from "./IERC20.sol";
@@ -11,7 +15,8 @@ import {IERC20Errors} from "../../interfaces/draft-IERC6093.sol";
 abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
     mapping(address account => uint256) private _balances;
 
-    mapping(address account => mapping(address spender => uint256)) private _allowances;
+    mapping(address account => mapping(address spender => uint256))
+        private _allowances;
 
     uint256 private _totalSupply;
 
@@ -50,18 +55,28 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
     }
 
     // 보통 owner는 EOA, spender는 CA
-    function allowance(address owner, address spender) public view virtual returns (uint256) {
+    function allowance(
+        address owner,
+        address spender
+    ) public view virtual returns (uint256) {
         return _allowances[owner][spender];
     }
 
     // spender에게 value만큼 approve해주겠다.
-    function approve(address spender, uint256 value) public virtual returns (bool) {
+    function approve(
+        address spender,
+        uint256 value
+    ) public virtual returns (bool) {
         address owner = _msgSender();
         _approve(owner, spender, value);
         return true;
     }
 
-    function transferFrom(address from, address to, uint256 value) public virtual returns (bool) {
+    function transferFrom(
+        address from,
+        address to,
+        uint256 value
+    ) public virtual returns (bool) {
         address spender = _msgSender();
         _spendAllowance(from, spender, value);
         _transfer(from, to, value);
@@ -123,7 +138,12 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
         _approve(owner, spender, value, true);
     }
 
-    function _approve(address owner, address spender, uint256 value, bool emitEvent) internal virtual {
+    function _approve(
+        address owner,
+        address spender,
+        uint256 value,
+        bool emitEvent
+    ) internal virtual {
         if (owner == address(0)) {
             revert ERC20InvalidApprover(address(0));
         }
@@ -137,11 +157,19 @@ abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
         }
     }
 
-    function _spendAllowance(address owner, address spender, uint256 value) internal virtual {
+    function _spendAllowance(
+        address owner,
+        address spender,
+        uint256 value
+    ) internal virtual {
         uint256 currentAllowance = allowance(owner, spender);
         if (currentAllowance != type(uint256).max) {
             if (currentAllowance < value) {
-                revert ERC20InsufficientAllowance(spender, currentAllowance, value);
+                revert ERC20InsufficientAllowance(
+                    spender,
+                    currentAllowance,
+                    value
+                );
             }
             unchecked {
                 _approve(owner, spender, currentAllowance - value, false);
