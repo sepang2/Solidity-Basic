@@ -7,4 +7,12 @@ contract Q63 {
         if(a > b) return a - b;
         else return b - a;
     }
+
+    function sub2(uint a, uint b) public pure returns(uint) {
+        if(a < b) {
+            (a, b) = (b, a);
+        }
+
+        return a - b;        
+    }
 }

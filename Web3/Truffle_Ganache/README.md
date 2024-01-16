@@ -26,7 +26,7 @@ truffle-config.js 파일에서
    development: {}
    }
 
-2. 아래쪽에서 컴파일러 버전 무조건 0.8.19로 바꿔주기
+2. local testnet을 사용할 땐 아래쪽에서 컴파일러 버전 무조건 0.8.19로 바꿔주기
    compiler: {
    solc: {
    version: "0.8.19",
@@ -35,7 +35,7 @@ truffle-config.js 파일에서
 
 3. truffle migrate
 
-## 사용하기
+## 사용하기 - 트러플-가나슈는 web3.js와 비슷 / 하드햇은 ethers.js와 비슷
 
 truffle console 로 truffle(developmen) > 진입
 let 변수명 = await contract명.deployed()
@@ -62,5 +62,32 @@ ganache 터미널 버전이 ganache-cli
 1. truffle init
 2. 코딩(.sol, .js, config, .env)
 3. truffle compile
-4. truffle migrate (--network goerli)
-5. truffle console --network goerli
+4. truffle migrate
+5. truffle console
+
+---
+
+# Goerli 네트워크 사용하기
+
+1. 패키지 설치
+   npm install dotenv
+   npm install @truffle/hdwallet-provider@next
+
+2. truffle-config.js line44~47쯤의 아래 부분 주석 해제
+   require('dotenv').config();
+   const { MNEMONIC, PROJECT_ID } = process.env;  
+   const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+3. truffle-config.js line85~쯤 goerli부분 주석 해제
+   goerli: {
+   }
+
+4. .env 생성 후
+   MNEMONIC = 비밀복구구문 넣기
+   PROJECT_ID = infura API Key
+
+5. 컴파일 후 --network 옵션 추가하여 배포
+   truffle migrate --network goerli
+
+6. console 진입 시 --network 옵션 추가
+   truffle console --network goerli

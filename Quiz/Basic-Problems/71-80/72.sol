@@ -7,16 +7,15 @@ pragma solidity >=0.8.2 <0.9.0;
 // 예) A (배포 직후 owner), B가 20 deposit(B가 owner), C가 10 deposit(B가 여전히 owner), D가 50 deposit(D가 owner), E가 20 deposit(D), E가 45 depoist(D), E가 65 deposit(E가 owner)
 contract Q72 {
     address payable public owner;
-    mapping(address => uint) public max;
+    uint max;
 
     constructor() {
         owner = payable(msg.sender);
     }
     
     function deposit() public payable {
-        max[msg.sender] = msg.value;
-
-        if(max[msg.sender] > max[owner]) {
+        if(msg.value > max) {
+            max = msg.value;
             owner = payable(msg.sender);
         }
     }

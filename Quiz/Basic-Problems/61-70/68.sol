@@ -8,9 +8,8 @@ contract Q68 {
     function factorial(uint _n) public pure returns(uint) {
         uint _result = 1;
 
-        while(_n != 0) {
+        while(--_n >= 1) {
             _result *= _n;
-            _n--;
         }
 
         return _result;
