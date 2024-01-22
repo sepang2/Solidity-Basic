@@ -33,9 +33,7 @@ contract ADDs {
 */
 
 contract RETURN_UINT_OR_STRING {
-    function returnUintOrString(
-        bool isString
-    ) public pure returns (bytes memory) {
+    function returnUintOrString(bool isString) public pure returns (bytes memory) {
         if (isString) {
             return abi.encodePacked("String");
         } else {

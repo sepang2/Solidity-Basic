@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.2 <0.9.0;
 
+
+// bytes를 넣었을 때, uint 형으로 변환시키는 함수를 구현하세요.
 contract BYTESUINT {
     function uintToBytes(uint _a) public pure returns(bytes memory) {
         return abi.encodePacked(_a);

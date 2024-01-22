@@ -2,11 +2,48 @@
 pragma solidity >=0.8.2 <0.9.0;
 
 /*
-bytes를 넣었을 때, uint 형으로 변환시키는 함수를 구현하세요.
-
-bytes&uint.sol 파일 확인
+숫자를 시분초로 변환하세요.
+예) 100 -> 1분 40초, 600 -> 10분, 1000 -> 16분 40초, 5250 -> 1시간 27분 30초
 */
 
-contract Test8_240118 {
+import "@openzeppelin/contracts/utils/Strings.sol";
+
+contract Test9_240122 {
+    function numToTime(uint _n) internal pure returns(uint, uint, uint) {
+        uint _hrs;
+        uint _mins;
+        uint _secs;
+
+        for(uint i = 0; i < 3; i++) {
+            if(_n >= 60 ** 2) {
+                _hrs = _n / 60 ** 2;
+                _n %= 60 ** 2;
+            } else {
+                _mins = _n / 60;
+                _secs = _n % 60;
+            }
+        }
+
+        return (_hrs, _mins, _secs);
+    }
     
+    function getTime(uint _n) public pure returns(string memory) {
+        string[8] memory _time;
+        (uint h, uint m, uint s) = numToTime(_n);
+        _time[0] = Strings.toString(h);
+        _time[1] = "hr";
+        _time[2] = " ";
+        _time[3] = Strings.toString(m);
+        _time[4] = "min";
+        _time[5] = " ";
+        _time[6] = Strings.toString(s);
+        _time[7] = "sec";
+
+        string memory _s;
+        for(uint i = 0; i < _time.length; i++) {
+            _s = string.concat(_s, _time[i]);
+        }
+        
+        return _s;
+    }
 }
