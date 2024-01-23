@@ -247,13 +247,22 @@ abstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Er
         return owner;
     }
 
+    /*
+    NFT를 transfer 할 수 없는 CA에게 잘못 보내는 경우 NFT가 묶여버리게 됨.
+    이를 방지하고자 받는 사람이 CA이면 오류를 발생시키는 함수.
+    */
     function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data) private {
+        // to.code.length > 0  => 의미 : to(받는 이)가 CA이다. (codelength.sol 참고)
         if (to.code.length > 0) {
+            // try 뒤의 함수 실행해서 retval값 나오면 아래 if로 가고,
+            // 실행해서 오류가 나오면 catch로 가고.
             try IERC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, data) returns (bytes4 retval) {
+                // retval 값이 표준과 같지 않다면, revert
                 if (retval != IERC721Receiver.onERC721Received.selector) {
                     revert ERC721InvalidReceiver(to);
                 }
             } catch (bytes memory reason) {
+                // reason의 길이가 0이다 = 오류 메시지를 안정했거나, Panic이거나
                 if (reason.length == 0) {
                     revert ERC721InvalidReceiver(to);
                 } else {

@@ -16,7 +16,16 @@ contract Q79_B {
         uint score;
     }
 
-    function setStudents(Student memory _st1, Student memory _st2, Student memory _st3) public view returns(uint) {
-        return A.getBiggest(_st1.score, _st2.score, _st3.score);
+    function setStudents(Student memory _st1, Student memory _st2, Student memory _st3) public view returns(Student memory) {
+        Student[3] memory students;
+        (students[0], students[1], students[2]) = (_st1, _st2, _st3);
+
+        uint high = A.getBiggest(_st1.score, _st2.score, _st3.score);
+
+        for(uint i = 0; i < 2; i++) {
+            if(students[i].score == high) {
+                return students[i];
+            }
+        }
     }
 }

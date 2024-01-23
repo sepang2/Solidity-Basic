@@ -10,6 +10,9 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Test9_240122 {
     function numToTime(uint _n) internal pure returns(uint, uint, uint) {
+        return(_n / 3600, (_n % 3600) / 60, _n % 60);
+        
+        /* 아래는 제출한 것
         uint _hrs;
         uint _mins;
         uint _secs;
@@ -25,9 +28,14 @@ contract Test9_240122 {
         }
 
         return (_hrs, _mins, _secs);
+        */
     }
     
     function getTime(uint _n) public pure returns(string memory) {
+        (uint h, uint m, uint s) = numToTime(_n);
+        return string(abi.encodePacked(Strings.toString(h), "hr ", Strings.toString(m), "min ", Strings.toString(s), unicode"초"));
+
+        /* 아래는 제출한 것
         string[8] memory _time;
         (uint h, uint m, uint s) = numToTime(_n);
         _time[0] = Strings.toString(h);
@@ -37,13 +45,14 @@ contract Test9_240122 {
         _time[4] = "min";
         _time[5] = " ";
         _time[6] = Strings.toString(s);
-        _time[7] = "sec";
+        _time[7] = unicode"초"; // 한글 넣는 법
 
         string memory _s;
         for(uint i = 0; i < _time.length; i++) {
             _s = string.concat(_s, _time[i]);
         }
-        
+
         return _s;
+        */
     }
 }

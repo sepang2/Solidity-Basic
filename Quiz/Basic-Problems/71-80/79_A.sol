@@ -7,9 +7,9 @@ pragma solidity >=0.8.2 <0.9.0;
 // 구현할 때는 Contract A를 import 하여 구현하세요.
 contract Q79_A {
     function getBiggest(uint _a, uint _b, uint _c) public pure returns(uint) {
-        if(_a > _b && _a > _c) {
+        if(_a >= _b && _a >= _c) {
             return _a;
-        } else if(_b > _a && _b > _c) {
+        } else if(_b >= _a && _b >= _c) {
             return _b;
         } else {
             return _c;
