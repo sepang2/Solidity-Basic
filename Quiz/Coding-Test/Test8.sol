@@ -8,7 +8,7 @@ pragma solidity >=0.8.2 <0.9.0;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract Test9_240122 {
+contract Test8_240122 {
     function numToTime(uint _n) internal pure returns(uint, uint, uint) {
         return(_n / 3600, (_n % 3600) / 60, _n % 60);
         

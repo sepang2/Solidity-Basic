@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 // 오류 종류에는 panic, error가 있음
 contract EH1 {
     /*
-    require 조건이 true여야 통과, error 메세지 사용 가능.
+    require 조건이 true여야 통과, error 메세지 전달 가능.
     오류는 error를 발생시킴.
     - Error occured: revert.
     - execution cost: 730
@@ -17,7 +17,7 @@ contract EH1 {
     }
 
     /*
-    revert는 조건이 필요 없음. 그냥 마주치면 멈추는 것. error 메세지 사용 가능.
+    revert는 조건이 필요 없음. 그냥 마주치면 멈추는 것. error 메세지 전달 가능.
     오류는 error를 발생시킴.
     - Error occured: revert.
     - execution cost: 689
@@ -31,7 +31,7 @@ contract EH1 {
     }
 
     /*
-    assert 조건이 true여야 통과, error 메세지 사용 불가.
+    assert 조건이 true여야 통과, error 메세지 전달 불가, 대신 에러코드를 반환함.
     오류는 panic을 일으킴. (0으로 나누기, array 길이 넘기기 등)
     내부적 에러 용도로만 사용을 권장함.
     
@@ -169,7 +169,10 @@ contract EH6 {
         (a, b, c) = (_a, _b, _c);
     }
 
+    // try-catch를 사용하는 이유 : error 상황에서도 바로 끝내지 않고 디테일하게 에러를 다루기 위해 사용.
+    // ex) 아래처럼 panic이 발생해도 a, c 값은 변경, error가 발생해도 b, c 값은 변경
     function trycatch(uint _a, uint _b, uint _c) public returns(string memory) {
+        // 함수가 실행이 되기만 하면 try로 들어감. 실행이 되지 않으면 catch로 들어감.
         try this.numbers(_a, _b, _c) {
             return ("done");
         } catch Panic(uint _errorcode) {
