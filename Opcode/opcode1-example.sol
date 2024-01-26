@@ -1,0 +1,142 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract example1 {
+    function mload() public {
+        bytes32[2] memory _b;
+
+        _b[0] = bytes32(uint(5));
+        _b[1] = bytes32(uint(6));
+    }
+}
+
+contract example2 {
+    function mload() public {
+        bytes32[4] memory _b;
+
+        _b[0] = bytes32(uint(5));
+        _b[1] = bytes32(uint(6));
+        _b[2] = bytes32(uint(7));
+        _b[3] = bytes32(uint(8));
+    }
+}
+
+// a = 1, b = 2, array 길이, array 1, 2, 3, 4 각각 한자리씩 해서
+// storage 5자리 (a, b포함 총 7자리)
+contract example3 {
+    uint public a = 1;
+    uint public b = 2;
+    uint[] public numbers = [1, 2, 3, 4];
+    function sload() public returns(uint){
+        return a+b;
+    }
+}
+/*
+{
+	"0x1ab0c6948a275349ae45a06aad66a8bd65ac18074615d53676c09b67809099e0": {
+		"key": "0x405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace",
+		"value": "0x01"
+	},
+	"0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+		"value": "0x01"
+	},
+	"0x2f2149d90beac0570c7f26368e4bc897ca24bba51b1a0f4960d358f764f11f31": {
+		"key": "0x405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5acf",
+		"value": "0x02"
+	},
+	"0x405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000002",
+		"value": "0x04"
+	},
+	"0x4aee6d38ad948303a0117a3e3deee4d912b62481681bd892442a7d720eee5d2c": {
+		"key": "0x405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ad0",
+		"value": "0x03"
+	},
+	"0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000001",
+		"value": "0x02"
+	},
+	"0xb6b7834d611e25670b584f73a3e810d0a47c773fe173fc6975449e876b0a6a70": {
+		"key": "0x405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ad1",
+		"value": "0x04"
+	}
+}
+*/
+
+// struct는 그냥 자료형 취급이라 uint public a = 1; 이랑 aaa public AAA = aaa(32, "abcde", 0x12) 비슷한 느낌.
+// a = 1, b = 2, aaa.number = 32, aaa.name = "abcde", aaa._b = 0x12 각각 한자리씩 해서
+// storage 3자리(struct는 값 3개로 구성되어 있으니) (a, b포함 총 5자리)
+contract example4 { 
+    uint public a = 1;
+    uint public b = 2;
+    struct aaa {
+        uint number;
+        string name;
+        bytes1 _b;
+    }
+
+    aaa public AAA = aaa(32, "abcde", 0x12);
+}
+/*
+{
+	"0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+		"value": "0x0000000000000000000000000000000000000000000000000000000000000001"
+	},
+	"0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000001",
+		"value": "0x0000000000000000000000000000000000000000000000000000000000000002"
+	},
+	"0x405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000002",
+		"value": "0x0000000000000000000000000000000000000000000000000000000000000020"
+	},
+	"0xc2575a0e9e593c00f959f8c92f12db2869c3395a3b0502d05e2516446f71f85b": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000003",
+		"value": "0x616263646500000000000000000000000000000000000000000000000000000a"
+	},
+	"0x8a35acfbc15ff81a39ae7d344fd709f28e8600b4aa8c65c6b64bfe7fe36bd19b": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000004",
+		"value": "0x0000000000000000000000000000000000000000000000000000000000000012"
+	}
+}
+*/
+
+// mapping도 struct와 마찬가지로 별도로 존재
+// storage 3자리 (a, b포함 총 5자리)
+contract example5 { 
+    uint public a = 1;
+    uint public b = 2;
+    mapping(uint => string) public c;
+
+    function sstore() public {
+        c[0] = "abc";
+        c[1] = "def";
+        c[16] = "ghi";
+    }
+}
+/*
+{
+	"0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+		"value": "0x01"
+	},
+	"0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6": {
+		"key": "0x0000000000000000000000000000000000000000000000000000000000000001",
+		"value": "0x02"
+	},
+	"0x7d2944a272ac5bae96b5bd2f67b6c13276d541dc09eb1cf414d96b19a09e1c2f": {
+		"key": "0xac33ff75c19e70fe83507db0d683fd3465c996598dc972688b7ace676c89077b",
+		"value": "0x6162630000000000000000000000000000000000000000000000000000000006"
+	},
+	"0x7fef4bf8f63cf9dd467136c679c02b5c17fcf6322d9562512bf5eb952cf7cc53": {
+		"key": "0xe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e0",
+		"value": "0x6465660000000000000000000000000000000000000000000000000000000006"
+	},
+	"0xf753212a6e27a02c94ee5d9202e7da0782cd48969a6bd21c435adae34ae2d6f2": {
+		"key": "0x328b8e687a0a963892a735f0237cb763bbbbf8ba0c1dfe2c221debb32c4bbd89",
+		"value": "0x6768690000000000000000000000000000000000000000000000000000000006"
+	}
+}
+*/

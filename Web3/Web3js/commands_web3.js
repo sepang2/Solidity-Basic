@@ -119,18 +119,14 @@ var signPromise = web3.eth.accounts.signTransaction(tx, account.privateKey);
 
 // 함수 호출 실행
 signPromise.then((signedTx) => {
-  var sentTx = web3.eth.sendSignedTransaction(
-    signedTx.raw || signedTx.rawTransaction
-  );
+  var sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
   sentTx.on("receipt", (receipt) => {
     console.log(receipt);
   });
 });
 
 // 돈 드는 함수 호출하기2 : 함수명 뒤에 .send({ }) 붙이기
-await contract.methods
-  .setA(7)
-  .send({ from: account.address, gas: 300000, gasPrice: 3000000 });
+await contract.methods.setA(7).send({ from: account.address, gas: 300000, gasPrice: 3000000 });
 
 // -------------------------------------------------------------------------------------------------
 
