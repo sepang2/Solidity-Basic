@@ -250,6 +250,7 @@ abstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Er
     /*
     NFT를 transfer 할 수 없는 CA에게 잘못 보내는 경우 NFT가 묶여버리게 됨.
     이를 방지하고자 받는 사람이 CA이면 오류를 발생시키는 함수.
+    함수 앞에 safe 붙은 애들이 생긴 이유.
     */
     function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data) private {
         // to.code.length > 0  => 의미 : to(받는 이)가 CA이다. (codelength.sol 참고)

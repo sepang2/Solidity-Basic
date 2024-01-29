@@ -61,7 +61,7 @@ contract Test7_240109 {
     mapping(address => User) public users;
 
     // * 사용자 등록 기능 - 사용자를 등록하는 기능
-    function registUser(string calldata _name) public {
+    function registerUser(string calldata _name) public {
         (users[msg.sender].name, users[msg.sender].addr) = (_name, msg.sender);
         userCount++;
     }
