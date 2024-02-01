@@ -10,9 +10,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Test8_240122 {
     function numToTime(uint _n) internal pure returns(uint, uint, uint) {
-        return(_n / 3600, (_n % 3600) / 60, _n % 60);
-        
-        /* 아래는 제출한 것
         uint _hrs;
         uint _mins;
         uint _secs;
@@ -28,14 +25,9 @@ contract Test8_240122 {
         }
 
         return (_hrs, _mins, _secs);
-        */
     }
     
     function getTime(uint _n) public pure returns(string memory) {
-        (uint h, uint m, uint s) = numToTime(_n);
-        return string(abi.encodePacked(Strings.toString(h), "hr ", Strings.toString(m), "min ", Strings.toString(s), unicode"초"));
-
-        /* 아래는 제출한 것
         string[8] memory _time;
         (uint h, uint m, uint s) = numToTime(_n);
         _time[0] = Strings.toString(h);
@@ -53,6 +45,16 @@ contract Test8_240122 {
         }
 
         return _s;
-        */
+    }
+}
+
+contract Test8_Answer {
+    function numToTime(uint _n) internal pure returns(uint, uint, uint) {
+        return(_n / 3600, (_n % 3600) / 60, _n % 60);
+    }
+    
+    function getTime(uint _n) public pure returns(string memory) {
+        (uint h, uint m, uint s) = numToTime(_n);
+        return string(abi.encodePacked(Strings.toString(h), "hr ", Strings.toString(m), "min ", Strings.toString(s), unicode"초"));
     }
 }
