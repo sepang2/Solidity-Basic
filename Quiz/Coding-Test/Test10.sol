@@ -16,7 +16,7 @@ contract Test10_240126 {
 
     struct CarInfo {
         uint num;
-        address payable owner;
+        address owner;
         uint time;
         uint payment;
     }
@@ -26,7 +26,7 @@ contract Test10_240126 {
 
     function In(uint _carNum) public {
         require(car[_carNum].time == 0 && CarStatus == status.Out, "Already In");
-        car[_carNum] = CarInfo(_carNum, payable(msg.sender), block.timestamp, 0);
+        car[_carNum] = CarInfo(_carNum, msg.sender, block.timestamp, 0);
         CarStatus = status.In;
     }
     
@@ -36,11 +36,50 @@ contract Test10_240126 {
             car[_carNum].time = 0;
         } else {
             uint t = (block.timestamp - car[_carNum].time - 2 hours) / 60 + 1;
-            payable(car[_carNum].owner).transfer(t * 200 wei);
+            // car[_carNum].owner.transfer(t * 200 wei);
             car[_carNum].payment = 200 wei;
             car[_carNum].time = 0;
         }
     }
 
     function deposit() public payable {} // test용
+}
+
+contract Test10_Answer {
+    struct car {
+        address addr;
+        uint time;
+    }
+
+    mapping(uint => car) public costs;
+
+    function enter(uint _number) public {
+        costs[_number] = car(msg.sender, block.timestamp);
+    }
+
+    function exit(uint _number) public {
+        pay(costs[_number].time);
+        costs[_number].time = 0;
+        costs[_number].addr = address(0); // 반납 기능. (렌트카 서비스 내용의 문제로도 사용 가능)
+    }
+
+    function pay(uint _start) public payable {
+        uint used = block.timestamp - _start - 2 hours;
+
+        if(used % 60 != 0) {
+            require(msg.value == (used / 60 + 1) * 200, "Not enough money");
+        } else {
+            require(msg.value == used / 60 * 200, "Not enough money");
+        }
+    }
+
+    function cal(uint _number) public view returns(uint) {
+        uint used = block.timestamp - costs[_number].time - 2 hours;
+
+        if(used % 60 != 0) {
+            return (used / 60 + 1) * 200;
+        } else {
+            return used / 60 * 200;
+        }
+    }
 }

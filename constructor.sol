@@ -13,6 +13,10 @@ contract CONSTRUCTOR {
     function getAB() public view returns(uint, uint) {
         return (a, b);
     }
+
+    function setA() public {
+        a = 10;
+    }
 }
 
 contract CONSTRUCTOR2 {

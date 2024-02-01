@@ -14,6 +14,7 @@ pragma solidity >=0.8.2 <0.9.0;
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 // 짧게 준다고 쉬운 문제가 아니다.
+// 진짜 서비스마냥 만들라는 소리였음.
 contract Test9_240124 {
     function depositForTest() public payable {}
 
