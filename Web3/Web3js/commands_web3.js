@@ -59,6 +59,7 @@ var account = web3.eth.accounts.privateKeyToAccount(privateKey);
 var account2 = "0x_address";
 
 // 변수 account를 지갑에 등록
+// 지갑에 등록 안하면 아래 send함수 등 실행이 안됨.(message: 'The method eth_sendTransaction does not exist/is not available)
 web3.eth.accounts.wallet.add(account);
 
 // 돈 보내기, account -> account2로 0.01 만큼 보내기
@@ -119,14 +120,18 @@ var signPromise = web3.eth.accounts.signTransaction(tx, account.privateKey);
 
 // 함수 호출 실행
 signPromise.then((signedTx) => {
-  var sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
+  var sentTx = web3.eth.sendSignedTransaction(
+    signedTx.raw || signedTx.rawTransaction
+  );
   sentTx.on("receipt", (receipt) => {
     console.log(receipt);
   });
 });
 
 // 돈 드는 함수 호출하기2 : 함수명 뒤에 .send({ }) 붙이기
-await contract.methods.setA(7).send({ from: account.address, gas: 300000, gasPrice: 3000000 });
+await contract.methods
+  .setA(7)
+  .send({ from: account.address, gas: 300000, gasPrice: 3000000 });
 
 // -------------------------------------------------------------------------------------------------
 
