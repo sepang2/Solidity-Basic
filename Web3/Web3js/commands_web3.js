@@ -12,14 +12,14 @@ node
 
 var { Web3 } = require("web3");
 
-// 사용할 수 있는 web3 명령어들 확인
-web3;
-
 // provider 사용(체인의 정보를 가져다 줌). provider는 cloudflare - ETH 메인넷 정보(기본제공)
 var web3 = new Web3("https://cloudflare-eth.com");
 
 // provider는 www.infura.io에서 제공하는 API키를 사용 - goerli 정보
 var web3 = new Web3("_API Key");
+
+// 사용할 수 있는 web3 명령어들 확인
+web3;
 
 // 현재 provider 정보 확인
 web3.eth.provider;
